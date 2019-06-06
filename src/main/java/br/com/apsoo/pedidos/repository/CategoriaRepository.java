@@ -12,6 +12,4 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
     @Query
     Categoria findByNome(String nome);
 
-//    @Query
-//    Boolean findByIdAndId(Long id);
 }

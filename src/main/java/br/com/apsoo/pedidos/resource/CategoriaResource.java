@@ -20,15 +20,14 @@ public class CategoriaResource {
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Integer id) {
         Categoria categoria = categoriaService.buscarPorId(id);
-
         return ResponseEntity.ok().body(categoria);
     }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> buscarCategoria() {
         List<Categoria> categoria = categoriaService.buscarCategoria();
         return ResponseEntity.ok().body(categoria);
     }
-
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> adicionarCategoria(@RequestBody Categoria categoria) {
@@ -42,7 +41,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<?> atualizarPorId(@RequestBody Categoria categoria){
+    public ResponseEntity<?> atualizarPorId(@RequestBody Categoria categoria) {
         Categoria categoriaAtualizada = categoriaService.atualizarNome(categoria);
         return ResponseEntity.ok().body(categoriaAtualizada);
     }

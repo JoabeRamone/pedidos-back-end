@@ -37,10 +37,9 @@ public class ProdutoResource {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<?> editarProduto(@RequestBody Produto produto,@PathVariable("idCategoria") Integer idcategoria) {
+    public ResponseEntity<?> editarProduto(@RequestBody Produto produto, @PathVariable("idCategoria") Integer idcategoria) {
         Produto produtoAtualizado = produtoService.editarProduto(produto, idcategoria);
         return ResponseEntity.ok().body(produtoAtualizado);
-
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

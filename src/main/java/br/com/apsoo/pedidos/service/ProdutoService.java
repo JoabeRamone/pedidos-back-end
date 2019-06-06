@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +36,6 @@ public class ProdutoService {
                 "O objeto com o Id: " + id +
                         " da classe " + Produto.class.getName() +
                         " não foi encontrado."));
-
     }
 
     public Categoria buscarProdutosPorCategoria(Integer idCategoria) {
@@ -46,7 +44,6 @@ public class ProdutoService {
 
     public Produto salvarProduto(Produto produto, Integer idCategoria) {
         validarProdutoExistente(produto, idCategoria);
-
         Produto produtoNovo = new Produto();
         List<Categoria> categorias = new ArrayList<>();
         Categoria categoria = categoriaService.buscarPorId(idCategoria);
@@ -55,7 +52,6 @@ public class ProdutoService {
         produtoNovo.setNome(produto.getNome());
         produtoNovo.setPreco(produto.getPreco());
         categoriaService.adicionarProdutoNaLista(produto, idCategoria);
-
         return produtoRepository.save(produtoNovo);
     }
 
@@ -72,23 +68,23 @@ public class ProdutoService {
     }
 
     public Produto editarProduto(Produto produto, Integer idcategoria) {
-        validarProdutoExistente(produto, idcategoria);
         Produto produtoAtualizado = buscarPorId(produto.getId());
-        produtoAtualizado.setNome(produto.getNome());
-        produtoAtualizado.setPreco(produto.getPreco());
+        if (produtoAtualizado.getId().equals(produto.getId())) {
+            produtoAtualizado.setNome(produto.getNome());
+            produtoAtualizado.setPreco(produto.getPreco());
+        } else {
+            throw new ProdutoExistenteException("Produto já existe na Categoria!");
+        }
         return produtoRepository.save(produtoAtualizado);
     }
 
-
     public ResponseEntity<?> deletar(Produto produto, Integer idCategoria) {
         Categoria categoria = categoriaService.buscarPorId(idCategoria);
-
         List<Produto> produtos = categoria.getProdutos();
-
-        for (Produto produtosCategoria: produtos) {
-            if (produtosCategoria.getId().equals(produto.getId())){
-               produtos.remove(produto);
-               break;
+        for (Produto produtosCategoria : produtos) {
+            if (produtosCategoria.getId().equals(produto.getId())) {
+                produtos.remove(produto);
+                break;
             }
         }
         produtoRepository.deleteById(produto.getId());
