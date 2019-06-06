@@ -52,8 +52,9 @@ public class Categoria implements Serializable {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public Categoria setNome(String nome) {
         this.nome = nome;
+        return null;
     }
 
     public List<Produto> getProdutos() {
