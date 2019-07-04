@@ -47,8 +47,8 @@ public class CategoriaService {
     }
 
     public Categoria atualizarNome(Categoria categoriaAtualizada) {
+        validarCategoriaExistente(categoriaAtualizada);
         Categoria categoria = buscarPorId(categoriaAtualizada.getId());
-
         if (!categoria.getId().equals(categoriaAtualizada.getId())) {
             throw new CategoriaExistenteException("Categoria já existe! ");
         }

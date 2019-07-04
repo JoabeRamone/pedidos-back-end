@@ -3,6 +3,7 @@ package br.com.apsoo.pedidos.service;
 import br.com.apsoo.pedidos.domain.Categoria;
 import br.com.apsoo.pedidos.domain.Produto;
 import br.com.apsoo.pedidos.repository.ProdutoRepository;
+import br.com.apsoo.pedidos.service.exception.ProdutoNaoPodeSerAtualizadoException;
 import br.com.apsoo.pedidos.service.exception.ObjectNotFoundException;
 import br.com.apsoo.pedidos.service.exception.ProdutoExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,14 +69,28 @@ public class ProdutoService {
     }
 
     public Produto editarProduto(Produto produto, Integer idcategoria) {
+        if ( validarSeNomeRedundante(produto)  &&  validarPrecoProduto(produto) ){
+            throw new ProdutoNaoPodeSerAtualizadoException("Nome da Categoria Não pode ser Atualizado!");
+        }
         Produto produtoAtualizado = buscarPorId(produto.getId());
         if (produtoAtualizado.getId().equals(produto.getId())) {
+            validarProdutoExistente(produto, idcategoria);
             produtoAtualizado.setNome(produto.getNome());
             produtoAtualizado.setPreco(produto.getPreco());
         } else {
             throw new ProdutoExistenteException("Produto já existe na Categoria!");
         }
         return produtoRepository.save(produtoAtualizado);
+    }
+
+    private boolean validarPrecoProduto(Produto produto) {
+        Produto produtoDoBanco = buscarPorId(produto.getId());
+        return produtoDoBanco.getPreco().equals(produto.getPreco());
+    }
+
+    private boolean validarSeNomeRedundante(Produto produto) {
+        Produto produtoDoBanco = buscarPorId(produto.getId());
+        return produtoDoBanco.getNome().equals(produto.getNome());
     }
 
     public ResponseEntity<?> deletar(Produto produto, Integer idCategoria) {

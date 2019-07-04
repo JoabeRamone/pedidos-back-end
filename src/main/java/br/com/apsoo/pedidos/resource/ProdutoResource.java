@@ -6,11 +6,9 @@ import br.com.apsoo.pedidos.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
 import java.util.List;
 
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin("https://controle-produto-front-api.herokuapp.com/#/")
 @RestController()
 @RequestMapping(value = "/categorias/{idCategoria}/produtos")
 public class ProdutoResource {
