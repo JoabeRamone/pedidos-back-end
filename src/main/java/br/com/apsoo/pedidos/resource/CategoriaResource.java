@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("https://controle-produto-front-api.herokuapp.com/#/")
+@CrossOrigin("https://controle-produto-front-api.herokuapp.com/#")
 @RestController()
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
