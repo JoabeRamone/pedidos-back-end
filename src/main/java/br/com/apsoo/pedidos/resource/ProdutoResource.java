@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@CrossOrigin(origins = "https://controle-produto-front-api.herokuapp.com/")
+@CrossOrigin("http://localhost:8081")
 @RestController()
 @RequestMapping(value = "/categorias/{idCategoria}/produtos")
 public class ProdutoResource {
